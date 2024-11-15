@@ -18,6 +18,7 @@ export const commands: Record<string, CommandFunction> = {
         <li>connect  - Build meaningful connections</li>
         <li>experiment - Start small experiments</li>
         <li>share    - Share your learnings</li>
+        <li>terminal - Open nested terminal</li>
       </ul>
     </div>
   ),

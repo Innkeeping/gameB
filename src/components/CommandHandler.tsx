@@ -1,6 +1,4 @@
-// CommandHandler.tsx
 import React, { useState, useCallback } from 'react';
-// import { CommandFunction } from './types';
 import { commands } from './commands';
 
 interface CommandHistory {
@@ -10,16 +8,20 @@ interface CommandHistory {
 
 interface CommandHandlerProps {
   setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>;
+  openModal?: () => void;
 }
 
-const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory }) => {
+const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }) => {
   const [input, setInput] = useState('');
 
   const handleCommand = useCallback((cmd: string) => {
     const trimmedCmd = cmd.trim().toLowerCase();
     const commandFn = commands[trimmedCmd as keyof typeof commands];
 
-    if (commandFn) {
+    if (trimmedCmd === 'terminal' && openModal) {
+      openModal();
+      setHistory(prev => [...prev, { command: cmd, output: <span className="text-emerald-400">Opening nested terminal...</span> }]);
+    } else if (commandFn) {
       const output = commandFn();
       if (output !== null) {
         setHistory(prev => [...prev, { command: cmd, output }]);
@@ -56,7 +58,7 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory }) => {
         output: <p className="text-red-500">Command not found: {trimmedCmd}</p>
       }]);
     }
-  }, [setHistory]);
+  }, [setHistory, openModal]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
