@@ -90,6 +90,13 @@ Error generating stack: `+i.message+`
 
 [SYSTEM] Welcome, Seeker. Type 'begin' to start your journey or 'help' for available commands.
 `})}])}else u&&e(d=>[...d,{command:o,output:a.jsxs("p",{className:"text-red-500",children:["Command not found: ",u]})}])},[e]),l=o=>{o.preventDefault(),n.trim()&&(r(n),t(""))},i=he.useCallback(o=>{o.key==="Enter"&&l(o)},[l]);return a.jsxs("form",{onSubmit:l,className:"flex items-center gap-2 flex-wrap",children:[a.jsx("span",{className:"text-emerald-600",children:"seeker@game-b"}),a.jsx("span",{className:"text-emerald-400",children:":~$"}),a.jsx("input",{type:"text",value:n,onChange:o=>t(o.target.value),onKeyDown:i,className:"flex-1 min-w-[200px] bg-transparent outline-none text-emerald-400",autoFocus:!0})]})};function Mf(){const[e,n]=he.useState([{command:"",output:a.jsx("pre",{className:"mb-4 text-emerald-400 whitespace-pre-wrap break-words",children:`
+░██████╗░░█████╗░███╗░░░███╗███████╗░░░░░░██████╗░
+██╔════╝░██╔══██╗████╗░████║██╔════╝░░░░░░██╔══██╗
+██║░░██╗░███████║██╔████╔██║█████╗░░█████╗██████╦╝
+██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░╚════╝██╔══██╗
+╚██████╔╝██║░░██║██║░╚═╝░██║███████╗░░░░░░██████╦╝
+░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝░░░░░░╚═════╝░
+
  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
  ██████████████████████████▀
  ██    GAME B TERMINAL   ██
