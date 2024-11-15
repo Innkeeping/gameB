@@ -10,9 +10,10 @@ interface CommandHistory {
 interface CommandHandlerProps {
   setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>;
   inputRef?: React.RefObject<HTMLInputElement>;
+  closeModal: () => void; // Add closeModal prop
 }
 
-const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, inputRef }) => {
+const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, inputRef, closeModal }) => {
   const [input, setInput] = useState('');
 
   // Mapping from hyphenated commands to camelCase keys
@@ -24,6 +25,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
     'long-term': 'longTerm',
     'coherence': 'coherence',
     'emergent': 'emergent',
+    'main': 'main', // Add main command
   };
 
   const handleCommand = useCallback((cmd: string) => {
@@ -32,7 +34,10 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
     let output: React.ReactNode;
     const mappedCmd = commandMap[trimmedCmd];
 
-    if (mappedCmd && mappedCmd in categories) {
+    if (mappedCmd === 'main') {
+      closeModal(); // Close the nested terminal if the command is 'main'
+      return;
+    } else if (mappedCmd && mappedCmd in categories) {
       const categoryLinks = categories[mappedCmd];
       output = (
         <div className="space-y-2">
@@ -62,6 +67,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
             <li>coherence - View coherent pluralism resources</li>
             <li>emergent - View emergent properties resources</li>
             <li>clear - Clear terminal screen</li>
+            <li>main - Return to main terminal</li> {/* Add main command to help */}
             <li>help - Display available commands</li>
           </ul>
         </div>
@@ -82,7 +88,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
         ),
       },
     ]);
-  }, [setHistory]);
+  }, [setHistory, closeModal]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

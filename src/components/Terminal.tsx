@@ -70,8 +70,12 @@ function Terminal() {
     if (nestedTerminalRef.current) {
       nestedTerminalRef.current.scrollTop = nestedTerminalRef.current.scrollHeight; // Scroll to the bottom
     }
-    nestedInputRef.current?.focus(); // Focus the nested input field
-  }, [nestedHistory]);
+    if (isModalOpen) {
+      nestedInputRef.current?.focus(); // Focus the nested input field when modal is open
+    } else {
+      inputRef.current?.focus(); // Focus the main input field when modal is closed
+    }
+  }, [nestedHistory, isModalOpen]);
 
   const handleTerminalClick = () => {
     inputRef.current?.focus();
@@ -140,7 +144,7 @@ function Terminal() {
                     </div>
                   ))}
                 </div>
-                <NestedCommandHandler setHistory={setNestedHistory} inputRef={nestedInputRef} />
+                <NestedCommandHandler setHistory={setNestedHistory} inputRef={nestedInputRef} closeModal={closeModal} />
               </div>
             </div>
           </div>
