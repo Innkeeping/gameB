@@ -3,12 +3,31 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Terminal as TerminalIcon } from 'lucide-react';
 import CommandHandler from './CommandHandler';
 import NestedCommandHandler from './NestedCommandHandler';
-// import { categories, Link } from './categories';
 
 interface CommandHistory {
   command: string;
   output: React.ReactNode;
 }
+
+const initialPrompt = (
+  <pre className="mb-4 text-emerald-400 whitespace-pre-wrap break-words">
+    {`
+░██████╗░░█████╗░███╗░░░███╗███████╗░░░░░░██████╗░
+██╔════╝░██╔══██╗████╗░████║██╔════╝░░░░░░██╔══██╗
+██║░░██╗░███████║██╔████╔██║█████╗░░█████╗██████╦╝
+██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░╚════╝██╔══██╗
+╚██████╔╝██║░░██║██║░╚═╝░██║███████╗░░░░░░██████╦╝
+░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝░░░░░░╚═════╝░
+
+ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+ ██████████████████████████▀
+ ██    GAME B TERMINAL   ██
+ ██████████████████████████
+
+[SYSTEM] Welcome, Seeker. Type 'begin' to start your journey or 'help' for available commands.
+`}
+  </pre>
+);
 
 const initialNestedHistory: CommandHistory[] = [
   {
@@ -25,25 +44,7 @@ function Terminal() {
   const [mainHistory, setMainHistory] = useState<CommandHistory[]>([
     {
       command: '',
-      output: (
-        <pre className="mb-4 text-emerald-400 whitespace-pre-wrap break-words">
-          {`
-░██████╗░░█████╗░███╗░░░███╗███████╗░░░░░░██████╗░
-██╔════╝░██╔══██╗████╗░████║██╔════╝░░░░░░██╔══██╗
-██║░░██╗░███████║██╔████╔██║█████╗░░█████╗██████╦╝
-██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░╚════╝██╔══██╗
-╚██████╔╝██║░░██║██║░╚═╝░██║███████╗░░░░░░██████╦╝
-░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝░░░░░░╚═════╝░
-
- ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
- ██████████████████████████▀
- ██    GAME B TERMINAL   ██
- ██████████████████████████
-
-[SYSTEM] Welcome, Seeker. Type 'begin' to start your journey or 'help' for available commands.
-`}
-        </pre>
-      ),
+      output: initialPrompt,
     },
   ]);
 
@@ -53,6 +54,7 @@ function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
   const nestedInputRef = useRef<HTMLInputElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null); // State for expanded section
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -87,6 +89,16 @@ function Terminal() {
     setIsModalOpen(false);
   };
 
+  const resetHistory = () => {
+    setMainHistory([
+      {
+        command: '',
+        output: initialPrompt,
+      },
+    ]);
+    setExpandedSection(null); // Reset expanded section when clearing history
+  };
+
   return (
     <div className="min-h-screen bg-black text-emerald-400 p-2 font-mono">
       <div className="max-w-3xl mx-auto">
@@ -111,7 +123,13 @@ function Terminal() {
               </div>
             ))}
 
-            <CommandHandler setHistory={setMainHistory} openModal={openModal} />
+            <CommandHandler
+              setHistory={setMainHistory}
+              openModal={openModal}
+              resetHistory={resetHistory}
+              setExpandedSection={setExpandedSection} // Pass setExpandedSection
+              expandedSection={expandedSection} // Pass expandedSection
+            />
             <div ref={terminalRef} />
           </div>
         </div>

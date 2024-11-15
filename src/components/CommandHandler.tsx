@@ -1,4 +1,4 @@
-// CommandHandler.tsx
+// commandHandler.tsx
 import React, { useState, useCallback } from 'react';
 import HelpCommand from '../commands/HelpCommand';
 import BeginCommand from '../commands/BeginCommand';
@@ -22,9 +22,12 @@ interface CommandHistory {
 interface CommandHandlerProps {
   setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>;
   openModal: () => void;
+  resetHistory: () => void;
+  setExpandedSection: (section: string | null) => void; // Add setExpandedSection prop
+  expandedSection: string | null; // Add expandedSection prop
 }
 
-const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }) => {
+const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal, resetHistory, setExpandedSection, expandedSection }) => {
   const [input, setInput] = useState('');
   const [sudoAttempts, setSudoAttempts] = useState(0); // Manage sudoAttempts state
 
@@ -68,10 +71,19 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }
         output = <ExperimentCommand />;
         break;
       case 'share':
-        output = <ShareCommand />;
+        output = <ShareCommand expandedSection={expandedSection} setExpandedSection={setExpandedSection} />;
         break;
+      case '1':
+        setExpandedSection('documentation');
+        return;
+      case '2':
+        setExpandedSection('channels');
+        return;
+      case '3':
+        setExpandedSection('methods');
+        return;
       case 'clear':
-        setHistory([]);
+        resetHistory();
         return;
       case 'terminal':
         openModal();
@@ -100,7 +112,7 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }
 
     // Optionally, you can also log the sudoAttempts count
     console.log(`Sudo attempts: ${sudoAttempts}`);
-  }, [setHistory, openModal, sudoAttempts]);
+  }, [setHistory, openModal, sudoAttempts, resetHistory, setExpandedSection, expandedSection]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
