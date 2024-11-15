@@ -1,106 +1,169 @@
 // categories.ts
 export interface Link {
   title: string;
-  url: string;
+  urls: string[]; // Changed from string to string[]
 }
 
 export const categories: { [key: string]: Link[] } = {
   patterns: [
     {
       title: 'Mutual Benefit Circuits',
-      url: 'https://example.com/patterns/mutual-benefit-circuits',
+      urls: [
+        'https://example.com/patterns/mutual-benefit-circuits',
+        'https://example.com/patterns/mutual-benefit-circuits-2',
+      ],
     },
     {
       title: 'Anti-Fragile Systems',
-      url: 'https://example.com/patterns/anti-fragile-systems',
+      urls: [
+        'https://example.com/patterns/anti-fragile-systems',
+        'https://example.com/patterns/anti-fragile-systems-2',
+      ],
     },
     {
       title: 'Distributed Governance',
-      url: 'https://example.com/patterns/distributed-governance',
+      urls: [
+        'https://example.com/patterns/distributed-governance',
+        'https://example.com/patterns/distributed-governance-2',
+      ],
     },
   ],
   collective: [
     {
       title: 'Distributed Decision-Making',
-      url: 'https://example.com/collective/distributed-decision-making',
+      urls: [
+        'https://example.com/collective/distributed-decision-making',
+        'https://example.com/collective/distributed-decision-making-2',
+      ],
     },
     {
       title: 'Wisdom Councils',
-      url: 'https://example.com/collective/wisdom-councils',
+      urls: [
+        'https://example.com/collective/wisdom-councils',
+        'https://example.com/collective/wisdom-councils-2',
+      ],
     },
     {
       title: 'Digital Commons',
-      url: 'https://example.com/collective/digital-commons',
+      urls: [
+        'https://example.com/collective/digital-commons',
+        'https://example.com/collective/digital-commons-2',
+      ],
     },
   ],
   regenerative: [
     {
       title: 'Biomimicry Principles',
-      url: 'https://example.com/regenerative/biomimicry-principles',
+      urls: [
+        'https://example.com/regenerative/biomimicry-principles',
+        'https://example.com/regenerative/biomimicry-principles-2',
+      ],
     },
     {
       title: 'Circular Economics',
-      url: 'https://example.com/regenerative/circular-economics',
+      urls: [
+        'https://example.com/regenerative/circular-economics',
+        'https://example.com/regenerative/circular-economics-2',
+      ],
     },
     {
       title: 'Regenerative Agriculture',
-      url: 'https://example.com/regenerative/regenerative-agriculture',
+      urls: [
+        'https://example.com/regenerative/regenerative-agriculture',
+        'https://example.com/regenerative/regenerative-agriculture-2',
+      ],
     },
   ],
   antiRivalrous: [
     {
       title: 'Anti-Rivalrous Dynamics',
-      url: 'https://example.com/anti-rivalrous/dynamics',
+      urls: [
+        'https://example.com/anti-rivalrous/dynamics',
+        'https://example.com/anti-rivalrous/dynamics-2',
+      ],
     },
     {
       title: 'Shared Resources',
-      url: 'https://example.com/anti-rivalrous/shared-resources',
+      urls: [
+        'https://example.com/anti-rivalrous/shared-resources',
+        'https://example.com/anti-rivalrous/shared-resources-2',
+      ],
     },
     {
       title: 'Open Source Projects',
-      url: 'https://example.com/anti-rivalrous/open-source-projects',
+      urls: [
+        'https://example.com/anti-rivalrous/open-source-projects',
+        'https://example.com/anti-rivalrous/open-source-projects-2',
+      ],
     },
   ],
   longTerm: [
     {
       title: 'Long-Term Thinking',
-      url: 'https://example.com/long-term/thinking',
+      urls: [
+        'https://example.com/long-term/thinking',
+        'https://example.com/long-term/thinking-2',
+      ],
     },
     {
       title: 'Sustainable Practices',
-      url: 'https://example.com/long-term/sustainable-practices',
+      urls: [
+        'https://example.com/long-term/sustainable-practices',
+        'https://example.com/long-term/sustainable-practices-2',
+      ],
     },
     {
       title: 'Eco-Systems Design',
-      url: 'https://example.com/long-term/eco-systems-design',
+      urls: [
+        'https://example.com/long-term/eco-systems-design',
+        'https://example.com/long-term/eco-systems-design-2',
+      ],
     },
   ],
   coherence: [
     {
       title: 'Coherent Pluralism',
-      url: 'https://example.com/coherence/pluralism',
+      urls: [
+        'https://example.com/coherence/pluralism',
+        'https://example.com/coherence/pluralism-2',
+      ],
     },
     {
       title: 'Unified Systems',
-      url: 'https://example.com/coherence/unified-systems',
+      urls: [
+        'https://example.com/coherence/unified-systems',
+        'https://example.com/coherence/unified-systems-2',
+      ],
     },
     {
       title: 'Inclusive Governance',
-      url: 'https://example.com/coherence/inclusive-governance',
+      urls: [
+        'https://example.com/coherence/inclusive-governance',
+        'https://example.com/coherence/inclusive-governance-2',
+      ],
     },
   ],
   emergent: [
     {
       title: 'Emergence Properties',
-      url: 'https://example.com/emergent/properties',
+      urls: [
+        'https://example.com/emergent/properties',
+        'https://example.com/emergent/properties-2',
+      ],
     },
     {
       title: 'Complex Adaptive Systems',
-      url: 'https://example.com/emergent/complex-adaptive-systems',
+      urls: [
+        'https://example.com/emergent/complex-adaptive-systems',
+        'https://example.com/emergent/complex-adaptive-systems-2',
+      ],
     },
     {
       title: 'Feedback Loops',
-      url: 'https://example.com/emergent/feedback-loops',
+      urls: [
+        'https://example.com/emergent/feedback-loops',
+        'https://example.com/emergent/feedback-loops-2',
+      ],
     },
   ],
 };
