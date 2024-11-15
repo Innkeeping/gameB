@@ -12,6 +12,7 @@ import LocalCommand from '../commands/LocalCommand';
 import ConnectCommand from '../commands/ConnectCommand';
 import ExperimentCommand from '../commands/ExperimentCommand';
 import ShareCommand from '../commands/ShareCommand';
+import SudoCommand from '../commands/SudoCommand'; // Import the SudoCommand component
 
 interface CommandHistory {
   command: string;
@@ -25,6 +26,7 @@ interface CommandHandlerProps {
 
 const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }) => {
   const [input, setInput] = useState('');
+  const [sudoAttempts, setSudoAttempts] = useState(0); // Manage sudoAttempts state
 
   const handleCommand = useCallback((cmd: string) => {
     const trimmedCmd = cmd.trim().toLowerCase();
@@ -74,6 +76,9 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }
       case 'terminal':
         openModal();
         return;
+      case 'sudo':
+        output = <SudoCommand setSudoAttempts={setSudoAttempts} />;
+        break;
       default:
         output = <p className="text-red-500">Command not found: {trimmedCmd}</p>;
         break;
