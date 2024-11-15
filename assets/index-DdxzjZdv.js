@@ -83,6 +83,13 @@ Error generating stack: `+i.message+`
  📢 SHARING WISDOM
  ==============
 `}),a.jsx("p",{children:"Spreading knowledge and inspiration:"}),a.jsxs("ul",{className:"ml-4 space-y-2",children:[a.jsxs("li",{className:"text-cyan-400",children:["1. Documentation",a.jsxs("ul",{className:"ml-4 mt-1 text-emerald-400",children:[a.jsx("li",{children:"• Case studies"}),a.jsx("li",{children:"• Success stories"}),a.jsx("li",{children:"• Failure lessons"})]})]}),a.jsxs("li",{className:"text-cyan-400",children:["2. Channels",a.jsxs("ul",{className:"ml-4 mt-1 text-emerald-400",children:[a.jsx("li",{children:"• Local gatherings"}),a.jsx("li",{children:"• Digital platforms"}),a.jsx("li",{children:"• Learning networks"})]})]}),a.jsxs("li",{className:"text-cyan-400",children:["3. Methods",a.jsxs("ul",{className:"ml-4 mt-1 text-emerald-400",children:[a.jsx("li",{children:"• Storytelling"}),a.jsx("li",{children:"• Visual documentation"}),a.jsx("li",{children:"• Practical guides"})]})]})]}),a.jsx("p",{className:"mt-4 text-yellow-400",children:"Your journey continues... Type 'help' to explore more commands."})]}),clear:()=>null},If=({setHistory:e})=>{const[n,t]=he.useState(""),r=he.useCallback(o=>{const u=o.trim().toLowerCase(),s=Of[u];if(s){const d=s();d!==null?e(v=>[...v,{command:o,output:d}]):u==="clear"&&e([{command:"",output:a.jsx("pre",{className:"mb-4 text-emerald-400 whitespace-pre-wrap break-words",children:`
+░██████╗░░█████╗░███╗░░░███╗███████╗░░░░░░██████╗░
+██╔════╝░██╔══██╗████╗░████║██╔════╝░░░░░░██╔══██╗
+██║░░██╗░███████║██╔████╔██║█████╗░░█████╗██████╦╝
+██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░╚════╝██╔══██╗
+╚██████╔╝██║░░██║██║░╚═╝░██║███████╗░░░░░░██████╦╝
+░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝░░░░░░╚═════╝░
+
  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
  ██████████████████████████▀
  ██    GAME B TERMINAL   ██
