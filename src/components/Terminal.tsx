@@ -1,8 +1,8 @@
 // Terminal.tsx
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import { Terminal as TerminalIcon } from 'lucide-react';
-import { CommandOutput } from './types';
-import { commands } from './commands';
+// import { CommandOutput } from './types';
+// import { commands } from './commands';
 import CommandHandler from './CommandHandler';
 
 interface CommandHistory {
@@ -28,11 +28,11 @@ function Terminal() {
       ),
     },
   ]);
-  const [sudoAttempts, setSudoAttempts] = useState(0);
+  // const [sudoAttempts, setSudoAttempts] = useState(0);
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [inputHistory, setInputHistory] = useState<string[]>([]);
-  const [inputHistoryIndex, setInputHistoryIndex] = useState<number>(-1);
+  // const [inputHistory, setInputHistory] = useState<string[]>([]);
+  // const [inputHistoryIndex, setInputHistoryIndex] = useState<number>(-1);
 
   useEffect(() => {
     if (terminalRef.current) {

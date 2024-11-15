@@ -308,18 +308,18 @@ export const commands: Record<string, CommandFunction> = {
     return null;
   },
 
-  sudo: (setSudoAttempts) => {
-    if (setSudoAttempts) {
-      setSudoAttempts(prev => prev + 1);
-      const messages = [
-        "Access denied: Game A permissions not valid here",
-        "Nice try. Game B requires different thinking.",
-        "Hierarchy-based commands have no power here.",
-        "Power emerges from connection, not control...",
-        "Perhaps it's time to explore 'patterns' instead?"
-      ];
-      return <p className="text-red-500">{messages[Math.min(prev, messages.length - 1)]}</p>;
-    }
-    return null;
-  }
+  // sudo: (setSudoAttempts) => {
+  //   if (setSudoAttempts) {
+  //     setSudoAttempts(prev => prev + 1);
+  //     const messages = [
+  //       "Access denied: Game A permissions not valid here",
+  //       "Nice try. Game B requires different thinking.",
+  //       "Hierarchy-based commands have no power here.",
+  //       "Power emerges from connection, not control...",
+  //       "Perhaps it's time to explore 'patterns' instead?"
+  //     ];
+  //     return <p className="text-red-500">{messages[Math.min(prev, messages.length - 1)]}</p>;
+  //   }
+  //   return null;
+  // }
 };

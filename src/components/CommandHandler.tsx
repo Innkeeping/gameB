@@ -1,6 +1,6 @@
 // CommandHandler.tsx
 import React, { useState, useCallback } from 'react';
-import { CommandFunction } from './types';
+// import { CommandFunction } from './types';
 import { commands } from './commands';
 
 interface CommandHistory {
