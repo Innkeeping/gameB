@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Terminal as TerminalIcon } from 'lucide-react';
 import CommandHandler from './CommandHandler';
 import NestedCommandHandler from './NestedCommandHandler';
-// import { commands } from './commands';
+import { categories, Link } from './categories';
 
 interface CommandHistory {
   command: string;
@@ -51,7 +51,6 @@ function Terminal() {
 
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const nestedTerminalRef = useRef<HTMLDivElement>(null);
   const nestedInputRef = useRef<HTMLInputElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -62,28 +61,26 @@ function Terminal() {
         block: 'end',
       };
       terminalRef.current.scrollIntoView(scrollOptions);
-      inputRef.current?.focus();
+      if (!isModalOpen) {
+        inputRef.current?.focus();
+      }
     }
-  }, [mainHistory]);
+  }, [mainHistory, isModalOpen]);
 
   useEffect(() => {
-    if (nestedTerminalRef.current) {
-      nestedTerminalRef.current.scrollTop = nestedTerminalRef.current.scrollHeight; // Scroll to the bottom
+    if (nestedInputRef.current) {
+      nestedInputRef.current.focus();
     }
-    if (isModalOpen) {
-      nestedInputRef.current?.focus(); // Focus the nested input field when modal is open
-    } else {
-      inputRef.current?.focus(); // Focus the main input field when modal is closed
-    }
-  }, [nestedHistory, isModalOpen]);
+  }, [isModalOpen]);
 
   const handleTerminalClick = () => {
-    inputRef.current?.focus();
+    if (!isModalOpen) {
+      inputRef.current?.focus();
+    }
   };
 
   const openModal = () => {
     setIsModalOpen(true);
-    setNestedHistory(initialNestedHistory);
   };
 
   const closeModal = () => {
@@ -120,8 +117,15 @@ function Terminal() {
         </div>
 
         {/* Modal */}
-        <input type="checkbox" id="my-modal" className="modal-toggle" checked={isModalOpen} onChange={closeModal} />
-        <div className="modal">
+        <div
+          className={`modal ${isModalOpen ? 'modal-open' : ''}`}
+          onClick={(e) => {
+            // Close modal if clicked outside
+            if (e.target === e.currentTarget) {
+              closeModal();
+            }
+          }}
+        >
           <div className="modal-box relative w-[80vw] max-w-4xl">
             <label htmlFor="my-modal" className="btn btn-sm btn-circle absolute right-2 top-2" onClick={closeModal}>✕</label>
             <h3 className="font-bold text-lg">Nested Terminal</h3>
