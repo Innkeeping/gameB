@@ -1,5 +1,5 @@
 // NestedCommandHandler.tsx
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { categories, Link } from './categories';
 
 interface CommandHistory {
@@ -15,6 +15,8 @@ interface CommandHandlerProps {
 
 const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, inputRef, closeModal }) => {
   const [input, setInput] = useState('');
+  const [links, setLinks] = useState<Link[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   // Mapping from hyphenated commands to camelCase keys
   const commandMap: { [key: string]: string } = {
@@ -39,11 +41,18 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
       return;
     } else if (mappedCmd && mappedCmd in categories) {
       const categoryLinks = categories[mappedCmd];
+      setLinks(categoryLinks);
+      setSelectedIndex(0); // Set the first link as selected by default
       output = (
         <div className="space-y-2">
           {categoryLinks.map((link, index) => (
-            <div key={index}>
-              <a href={link.url} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
+            <div key={index} className={index === selectedIndex ? 'bg-blue-100' : ''}>
+              <a
+                href={link.url}
+                className="text-blue-500 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {link.title}
               </a>
             </div>
@@ -53,6 +62,8 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
     } else if (trimmedCmd === 'clear') {
       // Reset history to only include the initial welcome message
       setHistory([]);
+      setLinks([]);
+      setSelectedIndex(null);
       return;
     } else if (trimmedCmd === 'help') {
       output = (
@@ -88,7 +99,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
         ),
       },
     ]);
-  }, [setHistory, closeModal]);
+  }, [setHistory, closeModal, setSelectedIndex, setLinks]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,9 +111,28 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSubmit(e);
+      if (selectedIndex !== null && links[selectedIndex]) {
+        window.open(links[selectedIndex].url, '_blank');
+      } else {
+        handleSubmit(e);
+      }
+    } else if (e.key === 'ArrowUp') {
+      if (selectedIndex !== null && selectedIndex > 0) {
+        setSelectedIndex(selectedIndex - 1);
+      }
+    } else if (e.key === 'ArrowDown') {
+      if (selectedIndex !== null && selectedIndex < links.length - 1) {
+        setSelectedIndex(selectedIndex + 1);
+      }
     }
-  }, [handleSubmit]);
+  }, [handleSubmit, links, selectedIndex, setSelectedIndex]);
+
+  useEffect(() => {
+    // Focus the input field when the component mounts
+    if (inputRef?.current) {
+      inputRef.current.focus();
+    }
+  }, [inputRef]);
 
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2 flex-wrap">

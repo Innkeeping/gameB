@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Terminal as TerminalIcon } from 'lucide-react';
 import CommandHandler from './CommandHandler';
 import NestedCommandHandler from './NestedCommandHandler';
-import { commands } from './commands';
+// import { commands } from './commands';
 
 interface CommandHistory {
   command: string;
