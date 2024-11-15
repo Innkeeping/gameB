@@ -1,5 +1,17 @@
+// CommandHandler.tsx
 import React, { useState, useCallback } from 'react';
-import { commands } from './commands';
+import HelpCommand from '../commands/HelpCommand';
+import BeginCommand from '../commands/BeginCommand';
+import MetacrisisCommand from '../commands/MetacrisisCommand';
+import GameACommand from '../commands/GameACommand';
+import GameBCommand from '../commands/GameBCommand';
+import PatternsCommand from '../commands/PatternsCommand';
+import QuestCommand from '../commands/QuestCommand';
+import StudyCommand from '../commands/StudyCommand';
+import LocalCommand from '../commands/LocalCommand';
+import ConnectCommand from '../commands/ConnectCommand';
+import ExperimentCommand from '../commands/ExperimentCommand';
+import ShareCommand from '../commands/ShareCommand';
 
 interface CommandHistory {
   command: string;
@@ -8,7 +20,7 @@ interface CommandHistory {
 
 interface CommandHandlerProps {
   setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>;
-  openModal?: () => void;
+  openModal: () => void;
 }
 
 const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }) => {
@@ -16,48 +28,70 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }
 
   const handleCommand = useCallback((cmd: string) => {
     const trimmedCmd = cmd.trim().toLowerCase();
-    const commandFn = commands[trimmedCmd as keyof typeof commands];
 
-    if (trimmedCmd === 'terminal' && openModal) {
-      openModal();
-      setHistory(prev => [...prev, { command: cmd, output: <span className="text-emerald-400">Opening nested terminal...</span> }]);
-    } else if (commandFn) {
-      const output = commandFn();
-      if (output !== null) {
-        setHistory(prev => [...prev, { command: cmd, output }]);
-      } else if (trimmedCmd === 'clear') {
-        // Reset history to only include the initial welcome message
-        setHistory([
-          {
-            command: '',
-            output: (
-              <pre className="mb-4 text-emerald-400 whitespace-pre-wrap break-words">
-{`
-░██████╗░░█████╗░███╗░░░███╗███████╗░░░░░░██████╗░
-██╔════╝░██╔══██╗████╗░████║██╔════╝░░░░░░██╔══██╗
-██║░░██╗░███████║██╔████╔██║█████╗░░█████╗██████╦╝
-██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░╚════╝██╔══██╗
-╚██████╔╝██║░░██║██║░╚═╝░██║███████╗░░░░░░██████╦╝
-░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝░░░░░░╚═════╝░
+    let output: React.ReactNode;
 
- ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
- ██████████████████████████▀
- ██    GAME B TERMINAL   ██
- ██████████████████████████
-
-[SYSTEM] Welcome, Seeker. Type 'begin' to start your journey or 'help' for available commands.
-`}
-              </pre>
-            ),
-          },
-        ]);
-      }
-    } else if (trimmedCmd) {
-      setHistory(prev => [...prev, {
-        command: cmd,
-        output: <p className="text-red-500">Command not found: {trimmedCmd}</p>
-      }]);
+    switch (trimmedCmd) {
+      case 'help':
+        output = <HelpCommand />;
+        break;
+      case 'begin':
+        output = <BeginCommand />;
+        break;
+      case 'metacrisis':
+        output = <MetacrisisCommand />;
+        break;
+      case 'gamea':
+        output = <GameACommand />;
+        break;
+      case 'gameb':
+        output = <GameBCommand />;
+        break;
+      case 'patterns':
+        output = <PatternsCommand />;
+        break;
+      case 'quest':
+        output = <QuestCommand />;
+        break;
+      case 'study':
+        output = <StudyCommand />;
+        break;
+      case 'local':
+        output = <LocalCommand />;
+        break;
+      case 'connect':
+        output = <ConnectCommand />;
+        break;
+      case 'experiment':
+        output = <ExperimentCommand />;
+        break;
+      case 'share':
+        output = <ShareCommand />;
+        break;
+      case 'clear':
+        setHistory([]);
+        return;
+      case 'terminal':
+        openModal();
+        return;
+      default:
+        output = <p className="text-red-500">Command not found: {trimmedCmd}</p>;
+        break;
     }
+
+    // Append the command and output, followed by the help prompt
+    setHistory((prevHistory) => [
+      ...prevHistory,
+      { command: cmd, output },
+      {
+        command: '',
+        output: (
+          <div className="text-emerald-400">
+            Type 'help' to see available commands.
+          </div>
+        ),
+      },
+    ]);
   }, [setHistory, openModal]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -68,11 +102,11 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }
     }
   };
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSubmit(e);
     }
-  }, [handleSubmit]);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2 flex-wrap">
@@ -81,7 +115,7 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }
       <input
         type="text"
         value={input}
-        onChange={e => setInput(e.target.value)}
+        onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
         className="flex-1 min-w-[200px] bg-transparent outline-none text-emerald-400"
         autoFocus

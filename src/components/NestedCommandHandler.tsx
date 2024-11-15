@@ -1,5 +1,5 @@
 // NestedCommandHandler.tsx
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect} from 'react';
 import { categories, Link } from './categories';
 
 interface CommandHistory {
@@ -73,7 +73,16 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
       );
     } else if (trimmedCmd === 'clear') {
       // Reset history to only include the initial welcome message
-      setHistory([]);
+      setHistory([
+        {
+          command: '',
+          output: (
+            <div className="text-emerald-400">
+              Type 'help' to see available commands.
+            </div>
+          ),
+        },
+      ]);
       setLinks([]);
       setSelectedIndex(null);
       setMode('command'); // Switch to command mode
@@ -100,18 +109,26 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
       output = <p className="text-red-500">Command not found: {trimmedCmd}</p>;
     }
 
-    // Append the command and output, followed by the help prompt
-    setHistory([
+    // Append the command and output
+    setHistory((prevHistory) => [
+      ...prevHistory,
       { command: cmd, output },
-      {
-        command: '',
-        output: (
-          <div className="text-emerald-400">
-            Type 'help' to see available commands.
-          </div>
-        ),
-      },
     ]);
+
+    // Append the help prompt if the command is not 'clear'
+    if (trimmedCmd !== 'clear') {
+      setHistory((prevHistory) => [
+        ...prevHistory,
+        {
+          command: '',
+          output: (
+            <div className="text-emerald-400">
+              Type 'help' to see available commands.
+            </div>
+          ),
+        },
+      ]);
+    }
   }, [setHistory, closeModal, setLinks, setSelectedIndex, setMode]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -150,6 +167,17 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
           setSelectedIndex(selectedIndex - 1);
         }
       } else if (e.key === 'ArrowDown') {
+        if (selectedIndex !== null) {
+          let totalUrls = links.reduce((sum, link) => sum + link.urls.length, 0);
+          if (selectedIndex < totalUrls - 1) {
+            setSelectedIndex(selectedIndex + 1);
+          }
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (selectedIndex !== null && selectedIndex > 0) {
+          setSelectedIndex(selectedIndex - 1);
+        }
+      } else if (e.key === 'ArrowRight') {
         if (selectedIndex !== null) {
           let totalUrls = links.reduce((sum, link) => sum + link.urls.length, 0);
           if (selectedIndex < totalUrls - 1) {
