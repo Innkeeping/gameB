@@ -12,7 +12,7 @@ import LocalCommand from '../commands/LocalCommand';
 import ConnectCommand from '../commands/ConnectCommand';
 import ExperimentCommand from '../commands/ExperimentCommand';
 import ShareCommand from '../commands/ShareCommand';
-import SudoCommand from '../commands/SudoCommand'; // Import the SudoCommand component
+import SudoCommand from '../commands/SudoCommand';
 
 interface CommandHistory {
   command: string;
@@ -97,7 +97,10 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal }
         ),
       },
     ]);
-  }, [setHistory, openModal]);
+
+    // Optionally, you can also log the sudoAttempts count
+    console.log(`Sudo attempts: ${sudoAttempts}`);
+  }, [setHistory, openModal, sudoAttempts]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
