@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+// Terminal.tsx
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Terminal as TerminalIcon } from 'lucide-react';
 import { CommandOutput } from './types';
 import { commands } from './commands';
+import CommandHandler from './CommandHandler';
 
 interface CommandHistory {
   command: string;
@@ -9,11 +11,28 @@ interface CommandHistory {
 }
 
 function Terminal() {
-  const [input, setInput] = useState('');
-  const [history, setHistory] = useState<CommandHistory[]>([]);
+  const [history, setHistory] = useState<CommandHistory[]>([
+    {
+      command: '',
+      output: (
+        <pre className="mb-4 text-emerald-400 whitespace-pre-wrap break-words">
+{`
+ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+ ██████████████████████████▀
+ ██    GAME B TERMINAL   ██
+ ██████████████████████████
+
+[SYSTEM] Welcome, Seeker. Type 'begin' to start your journey or 'help' for available commands.
+`}
+        </pre>
+      ),
+    },
+  ]);
   const [sudoAttempts, setSudoAttempts] = useState(0);
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [inputHistory, setInputHistory] = useState<string[]>([]);
+  const [inputHistoryIndex, setInputHistoryIndex] = useState<number>(-1);
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -30,35 +49,10 @@ function Terminal() {
     inputRef.current?.focus();
   };
 
-  const handleCommand = (cmd: string) => {
-    const trimmedCmd = cmd.trim().toLowerCase();
-    const commandFn = commands[trimmedCmd as keyof typeof commands];
-    
-    if (commandFn) {
-      const output = commandFn(setSudoAttempts);
-      if (output !== null) {
-        setHistory(prev => [...prev, { command: cmd, output }]);
-      }
-    } else if (trimmedCmd) {
-      setHistory(prev => [...prev, {
-        command: cmd,
-        output: <p className="text-red-500">Command not found: {trimmedCmd}</p>
-      }]);
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (input.trim()) {
-      handleCommand(input);
-      setInput('');
-    }
-  };
-
   return (
     <div className="min-h-screen bg-black text-emerald-400 p-2 font-mono">
       <div className="max-w-3xl mx-auto">
-        <div 
+        <div
           className="bg-black rounded border border-emerald-900"
           onClick={handleTerminalClick}
         >
@@ -68,16 +62,6 @@ function Terminal() {
           </div>
 
           <div className="p-3 h-[90vh] overflow-y-auto">
-            <pre className="mb-4 text-emerald-400 whitespace-pre-wrap break-words">
-{`
- ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
- ██████████████████████████▀
- ██    GAME B TERMINAL   ██
- ██████████████████████████
- 
-[SYSTEM] Welcome, Seeker. Type 'begin' to start your journey or 'help' for available commands.
-`}</pre>
-
             {history.map((entry, i) => (
               <div key={i} className="mb-2">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -89,18 +73,7 @@ function Terminal() {
               </div>
             ))}
 
-            <form onSubmit={handleSubmit} className="flex items-center gap-2 flex-wrap">
-              <span className="text-emerald-600">seeker@game-b</span>
-              <span className="text-emerald-400">:~$</span>
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="flex-1 min-w-[200px] bg-transparent outline-none text-emerald-400"
-                autoFocus
-              />
-            </form>
+            <CommandHandler setHistory={setHistory} />
             <div ref={terminalRef} />
           </div>
         </div>

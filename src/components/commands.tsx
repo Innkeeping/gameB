@@ -1,4 +1,3 @@
-import React from 'react';
 import { CommandFunction } from './types';
 
 export const commands: Record<string, CommandFunction> = {
