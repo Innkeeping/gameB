@@ -96,7 +96,7 @@ function Terminal() {
         output: initialPrompt,
       },
     ]);
-    setExpandedSection(null); // Reset expanded section when clearing history
+    setExpandedSection(null);
   };
 
   return (
@@ -127,18 +127,17 @@ function Terminal() {
               setHistory={setMainHistory}
               openModal={openModal}
               resetHistory={resetHistory}
-              setExpandedSection={setExpandedSection} // Pass setExpandedSection
-              expandedSection={expandedSection} // Pass expandedSection
+              setExpandedSection={setExpandedSection}
+              expandedSection={expandedSection}
             />
             <div ref={terminalRef} />
           </div>
         </div>
 
-        {/* Modal */}
         <div
           className={`modal ${isModalOpen ? 'modal-open' : ''}`}
           onClick={(e) => {
-            // Close modal if clicked outside
+
             if (e.target === e.currentTarget) {
               closeModal();
             }

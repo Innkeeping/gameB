@@ -10,16 +10,16 @@ interface CommandHistory {
 interface CommandHandlerProps {
   setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>;
   inputRef?: React.RefObject<HTMLInputElement>;
-  closeModal: () => void; // Add closeModal prop
+  closeModal: () => void;
 }
 
 const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, inputRef, closeModal }) => {
   const [input, setInput] = useState('');
   const [links, setLinks] = useState<Link[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [mode, setMode] = useState<'command' | 'navigation'>('command'); // Track the current mode
+  const [mode, setMode] = useState<'command' | 'navigation'>('command');
 
-  // Mapping from hyphenated commands to camelCase keys
+
   const commandMap: { [key: string]: string } = {
     'patterns': 'patterns',
     'collective': 'collective',
@@ -28,7 +28,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
     'long-term': 'longTerm',
     'coherence': 'coherence',
     'emergent': 'emergent',
-    'main': 'main', // Add main command
+    'main': 'main',
   };
 
   const handleCommand = useCallback((cmd: string) => {
@@ -38,13 +38,13 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
     const mappedCmd = commandMap[trimmedCmd];
 
     if (mappedCmd === 'main') {
-      closeModal(); // Close the nested terminal if the command is 'main'
+      closeModal();
       return;
     } else if (mappedCmd && mappedCmd in categories) {
       const categoryLinks = categories[mappedCmd];
       setLinks(categoryLinks);
-      setSelectedIndex(0); // Set the first link as selected by default
-      setMode('navigation'); // Switch to navigation mode
+      setSelectedIndex(0);
+      setMode('navigation');
       output = (
         <div className="space-y-2">
           {categoryLinks.map((link, linkIndex) => (
@@ -72,7 +72,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
         </div>
       );
     } else if (trimmedCmd === 'clear') {
-      // Reset history to only include the initial welcome message
+
       setHistory([
         {
           command: '',
@@ -85,7 +85,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
       ]);
       setLinks([]);
       setSelectedIndex(null);
-      setMode('command'); // Switch to command mode
+      setMode('command');
       return;
     } else if (trimmedCmd === 'help') {
       output = (
@@ -100,7 +100,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
             <li>coherence - View coherent pluralism resources</li>
             <li>emergent - View emergent properties resources</li>
             <li>clear - Clear terminal screen</li>
-            <li>main - Return to main terminal</li> {/* Add main command to help */}
+            <li>main - Return to main terminal</li>
             <li>help - Display available commands</li>
           </ul>
         </div>
@@ -109,13 +109,13 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
       output = <p className="text-red-500">Command not found: {trimmedCmd}</p>;
     }
 
-    // Append the command and output
+
     setHistory((prevHistory) => [
       ...prevHistory,
       { command: cmd, output },
     ]);
 
-    // Append the help prompt if the command is not 'clear'
+
     if (trimmedCmd !== 'clear') {
       setHistory((prevHistory) => [
         ...prevHistory,
@@ -185,24 +185,24 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
           }
         }
       } else if (e.key === 'Escape') {
-        // Exit navigation mode and clear links
+
         setLinks([]);
         setSelectedIndex(null);
         setMode('command');
         setInput('');
       } else {
-        // If any other key is pressed, switch to command mode and retain the character
+
         setLinks([]);
         setSelectedIndex(null);
         setMode('command');
-        setInput(e.key); // Set input to the current key
-        e.preventDefault(); // Prevent the key from being added to input twice
+        setInput(e.key);
+        e.preventDefault();
       }
     }
   }, [handleSubmit, links, selectedIndex, setSelectedIndex, mode, setMode, setInput]);
 
   useEffect(() => {
-    // Focus the input field when the component mounts
+
     if (inputRef?.current) {
       inputRef.current.focus();
     }

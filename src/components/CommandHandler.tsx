@@ -23,13 +23,13 @@ interface CommandHandlerProps {
   setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>;
   openModal: () => void;
   resetHistory: () => void;
-  setExpandedSection: (section: string | null) => void; // Add setExpandedSection prop
-  expandedSection: string | null; // Add expandedSection prop
+  setExpandedSection: (section: string | null) => void;
+  expandedSection: string | null;
 }
 
 const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal, resetHistory, setExpandedSection, expandedSection }) => {
   const [input, setInput] = useState('');
-  const [sudoAttempts, setSudoAttempts] = useState(0); // Manage sudoAttempts state
+  const [sudoAttempts, setSudoAttempts] = useState(0);
 
   const handleCommand = useCallback((cmd: string) => {
     const trimmedCmd = cmd.trim().toLowerCase();
@@ -96,7 +96,7 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal, 
         break;
     }
 
-    // Append the command and output, followed by the help prompt
+
     setHistory((prevHistory) => [
       ...prevHistory,
       { command: cmd, output },
@@ -110,7 +110,7 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal, 
       },
     ]);
 
-    // Optionally, you can also log the sudoAttempts count
+
     console.log(`Sudo attempts: ${sudoAttempts}`);
   }, [setHistory, openModal, sudoAttempts, resetHistory, setExpandedSection, expandedSection]);
 
