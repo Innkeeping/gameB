@@ -1,7 +1,7 @@
-// commands/ConnectCommand.tsx
+// commands/Connect.tsx
 import React from 'react';
 
-const ConnectCommand: React.FC = () => (
+const Connect: React.FC = () => (
   <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
     <pre className="text-purple-400">
       {`
@@ -35,6 +35,6 @@ const ConnectCommand: React.FC = () => (
     </ul>
     <p className="mt-4">Type 'experiment' to explore practical actions.</p>
   </div>
-);
+)
 
-export default ConnectCommand;
+export default Connect

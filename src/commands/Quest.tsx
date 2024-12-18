@@ -1,7 +1,7 @@
-// commands/QuestCommand.tsx
-import React from 'react';
+// commands/Quest.tsx
+import React from 'react'
 
-const QuestCommand: React.FC = () => (
+const Quest: React.FC = () => (
   <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
     <pre className="text-cyan-400">
       {`
@@ -20,6 +20,6 @@ const QuestCommand: React.FC = () => (
     </ul>
     <p className="mt-4 text-yellow-400">Remember: The transition happens through us, not to us.</p>
   </div>
-);
+)
 
-export default QuestCommand;
+export default Quest

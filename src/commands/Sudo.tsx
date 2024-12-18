@@ -1,11 +1,11 @@
 // SudoCommand.tsx
-import React from 'react';
+import React from 'react'
 
-interface SudoCommandProps {
+interface SudoProps {
   setSudoAttempts: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SudoCommand: React.FC<SudoCommandProps> = ({ setSudoAttempts }) => {
+const Sudo: React.FC<SudoProps> = ({ setSudoAttempts }) => {
   const messages = [
     "Access denied: Game A permissions not valid here",
     "Nice try. Game B requires different thinking.",
@@ -26,7 +26,7 @@ const SudoCommand: React.FC<SudoCommandProps> = ({ setSudoAttempts }) => {
     <p className="text-red-500" onClick={handleClick}>
       {randomMessage}
     </p>
-  );
-};
+  )
+}
 
-export default SudoCommand;
+export default Sudo

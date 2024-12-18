@@ -1,7 +1,7 @@
-// commands/GameBCommand.tsx
-import React from 'react';
+// commands/GameB.tsx
+import React from 'react'
 
-const GameBCommand: React.FC = () => (
+const GameB: React.FC = () => (
   <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
     <pre className="text-green-400">
       {`
@@ -19,6 +19,6 @@ const GameBCommand: React.FC = () => (
     </ul>
     <p className="mt-2">Type 'patterns' to study regenerative patterns.</p>
   </div>
-);
+)
 
-export default GameBCommand;
+export default GameB

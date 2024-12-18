@@ -1,7 +1,7 @@
 // commands/ExperimentCommand.tsx
-import React from 'react';
+import React from 'react'
 
-const ExperimentCommand: React.FC = () => (
+const Experiment: React.FC = () => (
   <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
     <pre className="text-yellow-400">
       {`
@@ -35,6 +35,6 @@ const ExperimentCommand: React.FC = () => (
     </ul>
     <p className="mt-4">Type 'share' to learn about spreading knowledge.</p>
   </div>
-);
+)
 
-export default ExperimentCommand;
+export default Experiment

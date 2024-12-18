@@ -1,13 +1,8 @@
-// commands/PatternsCommand.tsx
-import React from 'react';
+// commands/Patterns.tsx
+import React from 'react'
+import PatternsCommandHandler from '../commandhandlers/PatternsCommandHandler';
 
-const PatternsCommand: React.FC = () => {
-  const [expandedSection, setExpandedSection] = React.useState<string | null>(null);
-
-  const toggleSection = (section: string) => {
-    setExpandedSection(expandedSection === section ? null : section);
-  };
-
+const Patterns: React.FC<{ setExpandedSection: (section: string | null) => void; expandedSection: string | null }> = ({ setExpandedSection, expandedSection }) => {
   return (
     <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
       <pre className="text-pink-400">
@@ -18,8 +13,8 @@ const PatternsCommand: React.FC = () => {
       </pre>
       <p>Key patterns for transition:</p>
       <ul className="ml-4 space-y-2">
-        <li className="text-cyan-400 cursor-pointer" onClick={() => toggleSection('mutual-benefit')}>
-          1. Mutual Benefit Circuits
+        <li className="text-cyan-400">
+          1. Mutual Benefit Circuits <span className="text-gray-500">(Type 'mutual' to expand)</span>
           {expandedSection === 'mutual-benefit' && (
             <div className="ml-4 mt-1 text-emerald-400">
               <p>
@@ -33,8 +28,8 @@ const PatternsCommand: React.FC = () => {
             </div>
           )}
         </li>
-        <li className="text-cyan-400 cursor-pointer" onClick={() => toggleSection('anti-fragile')}>
-          2. Anti-Fragile Systems
+        <li className="text-cyan-400">
+          2. Anti-Fragile Systems <span className="text-gray-500">(Type 'fragile' to expand)</span>
           {expandedSection === 'anti-fragile' && (
             <div className="ml-4 mt-1 text-emerald-400">
               <p>
@@ -48,8 +43,8 @@ const PatternsCommand: React.FC = () => {
             </div>
           )}
         </li>
-        <li className="text-cyan-400 cursor-pointer" onClick={() => toggleSection('distributed-governance')}>
-          3. Distributed Governance
+        <li className="text-cyan-400">
+          3. Distributed Governance <span className="text-gray-500">(Type 'distributed' to expand)</span>
           {expandedSection === 'distributed-governance' && (
             <div className="ml-4 mt-1 text-emerald-400">
               <p>
@@ -63,8 +58,8 @@ const PatternsCommand: React.FC = () => {
             </div>
           )}
         </li>
-        <li className="text-cyan-400 cursor-pointer" onClick={() => toggleSection('sense-making')}>
-          4. Sense-Making Networks
+        <li className="text-cyan-400">
+          4. Sense-Making Networks <span className="text-gray-500">(Type 'sense' to expand)</span>
           {expandedSection === 'sense-making' && (
             <div className="ml-4 mt-1 text-emerald-400">
               <p>
@@ -78,8 +73,8 @@ const PatternsCommand: React.FC = () => {
             </div>
           )}
         </li>
-        <li className="text-cyan-400 cursor-pointer" onClick={() => toggleSection('generative-commons')}>
-          5. Generative Commons
+        <li className="text-cyan-400">
+          5. Generative Commons <span className="text-gray-500">(Type 'generative' to expand)</span>
           {expandedSection === 'generative-commons' && (
             <div className="ml-4 mt-1 text-emerald-400">
               <p>
@@ -97,8 +92,9 @@ const PatternsCommand: React.FC = () => {
       <p className="mt-4 text-yellow-400">
         In a world where systems are often far from equilibrium, small islands of coherence can shift the entire landscape. Welcome to Game B, a journey into a new social operating system that prioritizes human wellbeing, metastability, and ethical values. Here, we aim to cultivate wisdom, discernment, and the love that gods embody, to ensure a sustainable and fulfilling future for all. Your journey continues... Type 'help' to explore more commands.
       </p>
+      <PatternsCommandHandler setExpandedSection={setExpandedSection} expandedSection={expandedSection} />
     </div>
-  );
-};
+  )
+}
 
-export default PatternsCommand;
+export default Patterns

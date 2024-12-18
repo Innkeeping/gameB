@@ -1,132 +1,122 @@
 // commandHandler.tsx
-import React, { useState, useCallback } from 'react';
-import HelpCommand from '../commands/HelpCommand';
-import BeginCommand from '../commands/BeginCommand';
-import MetacrisisCommand from '../commands/MetacrisisCommand';
-import GameACommand from '../commands/GameACommand';
-import GameBCommand from '../commands/GameBCommand';
-import PatternsCommand from '../commands/PatternsCommand';
-import QuestCommand from '../commands/QuestCommand';
-import StudyCommand from '../commands/StudyCommand';
-import LocalCommand from '../commands/LocalCommand';
-import ConnectCommand from '../commands/ConnectCommand';
-import ExperimentCommand from '../commands/ExperimentCommand';
-import ShareCommand from '../commands/ShareCommand';
-import SudoCommand from '../commands/SudoCommand';
+import React, { useState, useCallback } from 'react'
+import Help from '../commands/Help'
+import Begin from '../commands/Begin'
+import MetaCrisis from '../commands/Metacrisis'
+import GameA from '../commands/GameA'
+import GameB from '../commands/GameB'
+import Patterns from '../commands/Patterns'
+import Quest from '../commands/Quest'
+import Study from '../commands/Study';
+import Local from '../commands/Local'
+import Connect from '../commands/Connect'
+import Experiment from '../commands/Experiment'
+import Share from '../commands/Share'
+import Sudo from '../commands/Sudo'
 
 interface CommandHistory {
-  command: string;
-  output: React.ReactNode;
+  command: string
+  output: React.ReactNode
 }
 
 interface CommandHandlerProps {
-  setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>;
-  openModal: () => void;
-  resetHistory: () => void;
-  setExpandedSection: (section: string | null) => void;
-  expandedSection: string | null;
+  setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>
+  openModal: () => void
+  resetHistory: () => void
+  setExpandedSection: (section: string | null) => void
+  expandedSection: string | null
 }
 
 const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal, resetHistory, setExpandedSection, expandedSection }) => {
-  const [input, setInput] = useState('');
-  const [sudoAttempts, setSudoAttempts] = useState(0);
+  const [input, setInput] = useState('')
+  const [sudoAttempts, setSudoAttempts] = useState(0)
 
   const handleCommand = useCallback((cmd: string) => {
-    const trimmedCmd = cmd.trim().toLowerCase();
+    const trimmedCmd = cmd.trim().toLowerCase()
 
-    let output: React.ReactNode;
+    let output: React.ReactNode
 
     switch (trimmedCmd) {
       case 'help':
-        output = <HelpCommand />;
-        break;
+        output = <Help />
+        break
       case 'begin':
-        output = <BeginCommand />;
-        break;
+        output = <Begin />
+        break
       case 'metacrisis':
-        output = <MetacrisisCommand />;
-        break;
+        output = <MetaCrisis />
+        break
       case 'gamea':
-        output = <GameACommand />;
-        break;
+        output = <GameA/>
+        break
       case 'gameb':
-        output = <GameBCommand />;
-        break;
+        output = <GameB />
+        break
       case 'patterns':
-        output = <PatternsCommand />;
-        break;
+        output = <Patterns setExpandedSection={setExpandedSection} expandedSection={expandedSection} />;
+        break
       case 'quest':
-        output = <QuestCommand />;
-        break;
+        output = <Quest />
+        break
       case 'study':
-        output = <StudyCommand />;
-        break;
+        output = <Study />
+        break
       case 'local':
-        output = <LocalCommand />;
-        break;
+        output = <Local />
+        break
       case 'connect':
-        output = <ConnectCommand />;
-        break;
+        output = <Connect />
+        break
       case 'experiment':
-        output = <ExperimentCommand />;
-        break;
+        output = <Experiment />
+        break
       case 'share':
-        output = <ShareCommand expandedSection={expandedSection} setExpandedSection={setExpandedSection} />;
-        break;
+        output = <Share expandedSection={expandedSection} setExpandedSection={setExpandedSection} />;
+        break
       case '1':
-        setExpandedSection('documentation');
-        return;
+        setExpandedSection('documentation')
+        return
       case '2':
-        setExpandedSection('channels');
-        return;
+        setExpandedSection('channels')
+        return
       case '3':
-        setExpandedSection('methods');
-        return;
+        setExpandedSection('methods')
+        return
       case 'clear':
-        resetHistory();
-        return;
+        resetHistory()
+        return
       case 'terminal':
-        openModal();
+        openModal()
         return;
       case 'sudo':
-        output = <SudoCommand setSudoAttempts={setSudoAttempts} />;
-        break;
+        output = <Sudo setSudoAttempts={setSudoAttempts} />;
+        break
       default:
         output = <p className="text-red-500">Command not found: {trimmedCmd}</p>;
-        break;
+        break
     }
-
 
     setHistory((prevHistory) => [
       ...prevHistory,
       { command: cmd, output },
-      {
-        command: '',
-        output: (
-          <div className="text-emerald-400">
-            Type 'help' to see available commands.
-          </div>
-        ),
-      },
-    ]);
+    ])
 
-
-    console.log(`Sudo attempts: ${sudoAttempts}`);
+    console.log(`Sudo attempts: ${sudoAttempts}`)
   }, [setHistory, openModal, sudoAttempts, resetHistory, setExpandedSection, expandedSection]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (input.trim()) {
-      handleCommand(input);
-      setInput('');
+      handleCommand(input)
+      setInput('')
     }
-  };
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSubmit(e);
+      handleSubmit(e)
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2 flex-wrap">
@@ -138,10 +128,10 @@ const CommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, openModal, 
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
         className="flex-1 min-w-[200px] bg-transparent outline-none text-emerald-400"
-        autoFocus
+        autoFocus={expandedSection === null} // Only autoFocus if expandedSection is null
       />
     </form>
-  );
-};
+  )
+}
 
-export default CommandHandler;
+export default CommandHandler

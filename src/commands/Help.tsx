@@ -1,7 +1,7 @@
-// commands/HelpCommand.tsx
-import React from 'react';
+// commands/Help.tsx
+import React from 'react'
 
-const HelpCommand: React.FC = () => (
+const Help: React.FC = () => (
   <div className="text-emerald-400 whitespace-pre-wrap break-words">
     <p className="mb-1">[Available Commands]</p>
     <ul className="ml-4 space-y-1">
@@ -21,6 +21,6 @@ const HelpCommand: React.FC = () => (
       <li>terminal - Open nested terminal</li>
     </ul>
   </div>
-);
+)
 
-export default HelpCommand;
+export default Help

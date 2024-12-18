@@ -1,7 +1,7 @@
-// commands/LocalCommand.tsx
-import React from 'react';
+// commands/Local.tsx
+import React from 'react'
 
-const LocalCommand: React.FC = () => (
+const Local: React.FC = () => (
   <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
     <pre className="text-green-400">
       {`
@@ -48,6 +48,6 @@ const LocalCommand: React.FC = () => (
       </li>
     </ul>
   </div>
-);
+)
 
-export default LocalCommand;
+export default Local

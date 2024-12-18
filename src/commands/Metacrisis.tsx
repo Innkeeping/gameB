@@ -1,7 +1,7 @@
-// commands/MetacrisisCommand.tsx
-import React from 'react';
+// commands/Metacrisis.tsx
+import React from 'react'
 
-const MetacrisisCommand: React.FC = () => (
+const MetaCrisis: React.FC = () => (
   <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
     <pre className="text-red-500">
       {`
@@ -20,6 +20,6 @@ const MetacrisisCommand: React.FC = () => (
     <p className="mt-2">These are not separate problems, but symptoms of Game A's fundamental design.</p>
     <p className="mt-2 text-cyan-400">Type 'gamea' to understand the current system.</p>
   </div>
-);
+)
 
-export default MetacrisisCommand;
+export default MetaCrisis

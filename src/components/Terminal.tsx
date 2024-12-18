@@ -1,12 +1,12 @@
 // Terminal.tsx
-import React, { useState, useRef, useEffect } from 'react';
-import { Terminal as TerminalIcon } from 'lucide-react';
-import CommandHandler from './CommandHandler';
-import NestedCommandHandler from './NestedCommandHandler';
+import React, { useState, useRef, useEffect } from 'react'
+import { Terminal as TerminalIcon } from 'lucide-react'
+import CommandHandler from './CommandHandler'
+import NestedCommandHandler from './NestedCommandHandler'
 
 interface CommandHistory {
-  command: string;
-  output: React.ReactNode;
+  command: string
+  output: React.ReactNode
 }
 
 const initialPrompt = (
@@ -38,7 +38,7 @@ const initialNestedHistory: CommandHistory[] = [
       </div>
     ),
   },
-];
+]
 
 function Terminal() {
   const [mainHistory, setMainHistory] = useState<CommandHistory[]>([
@@ -46,48 +46,48 @@ function Terminal() {
       command: '',
       output: initialPrompt,
     },
-  ]);
+  ])
 
-  const [nestedHistory, setNestedHistory] = useState<CommandHistory[]>(initialNestedHistory);
+  const [nestedHistory, setNestedHistory] = useState<CommandHistory[]>(initialNestedHistory)
 
-  const terminalRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const nestedInputRef = useRef<HTMLInputElement>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [expandedSection, setExpandedSection] = useState<string | null>(null); // State for expanded section
+  const terminalRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const nestedInputRef = useRef<HTMLInputElement>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [expandedSection, setExpandedSection] = useState<string | null>(null)
 
   useEffect(() => {
     if (terminalRef.current) {
       const scrollOptions: ScrollIntoViewOptions = {
         behavior: 'instant',
         block: 'end',
-      };
-      terminalRef.current.scrollIntoView(scrollOptions);
+      }
+      terminalRef.current.scrollIntoView(scrollOptions)
       if (!isModalOpen) {
-        inputRef.current?.focus();
+        inputRef.current?.focus()
       }
     }
-  }, [mainHistory, isModalOpen]);
+  }, [mainHistory, isModalOpen])
 
   useEffect(() => {
     if (nestedInputRef.current) {
-      nestedInputRef.current.focus();
+      nestedInputRef.current.focus()
     }
-  }, [isModalOpen]);
+  }, [isModalOpen])
 
   const handleTerminalClick = () => {
     if (!isModalOpen) {
-      inputRef.current?.focus();
+      inputRef.current?.focus()
     }
-  };
+  }
 
   const openModal = () => {
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
   const closeModal = () => {
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+  }
 
   const resetHistory = () => {
     setMainHistory([
@@ -95,9 +95,9 @@ function Terminal() {
         command: '',
         output: initialPrompt,
       },
-    ]);
-    setExpandedSection(null);
-  };
+    ])
+    setExpandedSection(null)
+  }
 
   return (
     <div className="min-h-screen bg-black text-emerald-400 p-2 font-mono">
@@ -172,7 +172,7 @@ function Terminal() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Terminal;
+export default Terminal

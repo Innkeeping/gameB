@@ -1,12 +1,12 @@
-// commands/ShareCommand.tsx
+// commands/Share.tsx
 import React from 'react';
 
-interface ShareCommandProps {
+interface ShareProps {
   expandedSection: string | null;
   setExpandedSection: (section: string | null) => void;
 }
 
-const ShareCommand: React.FC<ShareCommandProps> = ({ expandedSection, setExpandedSection }) => {
+const Share: React.FC<ShareProps> = ({ expandedSection, setExpandedSection }) => {
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
@@ -56,7 +56,7 @@ const ShareCommand: React.FC<ShareCommandProps> = ({ expandedSection, setExpande
         In a world where systems are often far from equilibrium, small islands of coherence can shift the entire landscape. Welcome to Game B, a journey into a new social operating system that prioritizes human wellbeing, metastability, and ethical values. Here, we aim to cultivate wisdom, discernment, and the love that gods embody, to ensure a sustainable and fulfilling future for all. Your journey continues... Type 'help' to explore more commands.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default ShareCommand;
+export default Share

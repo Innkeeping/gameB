@@ -1,23 +1,23 @@
 // NestedCommandHandler.tsx
-import React, { useState, useCallback, useEffect} from 'react';
-import { categories, Link } from './categories';
+import React, { useState, useCallback, useEffect} from 'react'
+import { categories, Link } from './categories'
 
 interface CommandHistory {
   command: string;
-  output: React.ReactNode;
+  output: React.ReactNode
 }
 
 interface CommandHandlerProps {
-  setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>;
-  inputRef?: React.RefObject<HTMLInputElement>;
-  closeModal: () => void;
+  setHistory: React.Dispatch<React.SetStateAction<CommandHistory[]>>
+  inputRef?: React.RefObject<HTMLInputElement>
+  closeModal: () => void
 }
 
 const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, inputRef, closeModal }) => {
-  const [input, setInput] = useState('');
-  const [links, setLinks] = useState<Link[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [mode, setMode] = useState<'command' | 'navigation'>('command');
+  const [input, setInput] = useState('')
+  const [links, setLinks] = useState<Link[]>([])
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [mode, setMode] = useState<'command' | 'navigation'>('command')
 
 
   const commandMap: { [key: string]: string } = {
@@ -29,22 +29,22 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
     'coherence': 'coherence',
     'emergent': 'emergent',
     'main': 'main',
-  };
+  }
 
   const handleCommand = useCallback((cmd: string) => {
-    const trimmedCmd = cmd.trim().toLowerCase();
+    const trimmedCmd = cmd.trim().toLowerCase()
 
     let output: React.ReactNode;
-    const mappedCmd = commandMap[trimmedCmd];
+    const mappedCmd = commandMap[trimmedCmd]
 
     if (mappedCmd === 'main') {
-      closeModal();
+      closeModal()
       return;
     } else if (mappedCmd && mappedCmd in categories) {
-      const categoryLinks = categories[mappedCmd];
-      setLinks(categoryLinks);
-      setSelectedIndex(0);
-      setMode('navigation');
+      const categoryLinks = categories[mappedCmd]
+      setLinks(categoryLinks)
+      setSelectedIndex(0)
+      setMode('navigation')
       output = (
         <div className="space-y-2">
           {categoryLinks.map((link, linkIndex) => (
@@ -64,13 +64,13 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
                         {url}
                       </a>
                     </li>
-                  );
+                  )
                 })}
               </ul>
             </div>
           ))}
         </div>
-      );
+      )
     } else if (trimmedCmd === 'clear') {
 
       setHistory([
@@ -82,11 +82,11 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
             </div>
           ),
         },
-      ]);
-      setLinks([]);
-      setSelectedIndex(null);
-      setMode('command');
-      return;
+      ])
+      setLinks([])
+      setSelectedIndex(null)
+      setMode('command')
+
     } else if (trimmedCmd === 'help') {
       output = (
         <div className="text-emerald-400">
@@ -104,7 +104,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
             <li>help - Display available commands</li>
           </ul>
         </div>
-      );
+      )
     } else {
       output = <p className="text-red-500">Command not found: {trimmedCmd}</p>;
     }
@@ -113,7 +113,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
     setHistory((prevHistory) => [
       ...prevHistory,
       { command: cmd, output },
-    ]);
+    ])
 
 
     if (trimmedCmd !== 'clear') {
@@ -127,76 +127,76 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
             </div>
           ),
         },
-      ]);
+      ])
     }
   }, [setHistory, closeModal, setLinks, setSelectedIndex, setMode]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (input.trim()) {
-      handleCommand(input);
-      setInput('');
+      handleCommand(input)
+      setInput('')
     }
-  };
+  }
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log('Key pressed:', e.key);
+    console.log('Key pressed:', e.key)
 
     if (mode === 'command') {
       if (e.key === 'Enter') {
-        handleSubmit(e);
+        handleSubmit(e)
       }
     } else if (mode === 'navigation') {
       if (e.key === 'Enter' || e.key === ' ') {
         if (selectedIndex !== null) {
-          const flatIndex = selectedIndex;
-          let cumulativeIndex = 0;
+          const flatIndex = selectedIndex
+          let cumulativeIndex = 0
 
           for (const link of links) {
             if (flatIndex < cumulativeIndex + link.urls.length) {
-              const urlIndex = flatIndex - cumulativeIndex;
-              console.log('Opening URL:', link.urls[urlIndex]);
-              window.open(link.urls[urlIndex], '_blank');
-              break;
+              const urlIndex = flatIndex - cumulativeIndex
+              console.log('Opening URL:', link.urls[urlIndex])
+              window.open(link.urls[urlIndex], '_blank')
+              break
             }
-            cumulativeIndex += link.urls.length;
+            cumulativeIndex += link.urls.length
           }
         }
       } else if (e.key === 'ArrowUp') {
         if (selectedIndex !== null && selectedIndex > 0) {
-          setSelectedIndex(selectedIndex - 1);
+          setSelectedIndex(selectedIndex - 1)
         }
       } else if (e.key === 'ArrowDown') {
         if (selectedIndex !== null) {
           let totalUrls = links.reduce((sum, link) => sum + link.urls.length, 0);
           if (selectedIndex < totalUrls - 1) {
-            setSelectedIndex(selectedIndex + 1);
+            setSelectedIndex(selectedIndex + 1)
           }
         }
       } else if (e.key === 'ArrowLeft') {
         if (selectedIndex !== null && selectedIndex > 0) {
-          setSelectedIndex(selectedIndex - 1);
+          setSelectedIndex(selectedIndex - 1)
         }
       } else if (e.key === 'ArrowRight') {
         if (selectedIndex !== null) {
           let totalUrls = links.reduce((sum, link) => sum + link.urls.length, 0);
           if (selectedIndex < totalUrls - 1) {
-            setSelectedIndex(selectedIndex + 1);
+            setSelectedIndex(selectedIndex + 1)
           }
         }
       } else if (e.key === 'Escape') {
 
-        setLinks([]);
-        setSelectedIndex(null);
-        setMode('command');
-        setInput('');
+        setLinks([])
+        setSelectedIndex(null)
+        setMode('command')
+        setInput('')
       } else {
 
-        setLinks([]);
-        setSelectedIndex(null);
-        setMode('command');
-        setInput(e.key);
-        e.preventDefault();
+        setLinks([])
+        setSelectedIndex(null)
+        setMode('command')
+        setInput(e.key)
+        e.preventDefault()
       }
     }
   }, [handleSubmit, links, selectedIndex, setSelectedIndex, mode, setMode, setInput]);
@@ -204,15 +204,15 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
   useEffect(() => {
 
     if (inputRef?.current) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
-  }, [inputRef]);
+  }, [inputRef])
 
   useEffect(() => {
-    console.log('Links:', links);
-    console.log('Selected Index:', selectedIndex);
-    console.log('Mode:', mode);
-  }, [links, selectedIndex, mode]);
+    console.log('Links:', links)
+    console.log('Selected Index:', selectedIndex)
+    console.log('Mode:', mode)
+  }, [links, selectedIndex, mode])
 
   return (
     <div>
@@ -254,7 +254,7 @@ const NestedCommandHandler: React.FC<CommandHandlerProps> = ({ setHistory, input
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NestedCommandHandler;
+export default NestedCommandHandler

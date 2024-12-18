@@ -1,7 +1,7 @@
-// commands/StudyCommand.tsx
-import React from 'react';
+// commands/Study.tsx
+import React from 'react'
 
-const StudyCommand: React.FC = () => (
+const Study: React.FC = () => (
   <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
     <pre className="text-blue-400">
       {`
@@ -71,6 +71,6 @@ const StudyCommand: React.FC = () => (
     </ul>
     <p className="mt-4">Type 'local' to explore how to apply these concepts locally.</p>
   </div>
-);
+)
 
-export default StudyCommand;
+export default Study

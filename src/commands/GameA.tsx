@@ -1,7 +1,7 @@
-// commands/GameACommand.tsx
+// commands/GameA.tsx
 import React from 'react';
 
-const GameACommand: React.FC = () => (
+const GameA: React.FC = () => (
   <div className="text-emerald-400 space-y-2 whitespace-pre-wrap break-words">
     <pre className="text-yellow-400">
       {`
@@ -19,6 +19,6 @@ const GameACommand: React.FC = () => (
     </ul>
     <p className="mt-2 text-cyan-400">Type 'gameb' to explore the alternative.</p>
   </div>
-);
+)
 
-export default GameACommand;
+export default GameA
